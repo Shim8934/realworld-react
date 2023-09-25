@@ -1,7 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { Button, Form } from "react-bootstrap";
+
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -12,12 +14,12 @@ const Register = () => {
 
   const setters = {
     username: setUsername,
-    email: setEmail,
+    email   : setEmail,
     password: setPassword
   };
 
   const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
     setters[name](value);
   }, []);
 
@@ -26,14 +28,11 @@ const Register = () => {
 
     if (!username) {
       return alert("Username을 입력하세요.");
-    }
-    else if (!email) {
+    } else if (!email) {
       return alert("ID를 입력하세요.");
-    }
-    else if (!password) {
+    } else if (!password) {
       return alert("Password를 입력하세요.");
-    }
-    else {
+    } else {
       let user = {
         user: {
           username,
@@ -61,42 +60,22 @@ const Register = () => {
                 <p className="text-xs-center">
                   <Link to="/login">Have an account?</Link>
                 </p>
+                <Form>
+                  <Form.Group onSubmit={SignUpFunc} controlId="registerUsername">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="text" placeholder="Username" value={username} name="username" onChange={handleChange}/>
+                  </Form.Group>
 
-                <ul className="error-messages">
-                  <li>That email is already taken</li>
-                </ul>
-
-                <form onSubmit = { SignUpFunc }>
-                  <fieldset className="form-group">
-                    <input className="form-control form-control-lg"
-                           type="text"
-                           placeholder="Username"
-                           value={username}
-                           name="username"
-                           onChange={handleChange}
-                    />
-                  </fieldset>
-                  <fieldset className="form-group">
-                    <input
-                        className="form-control form-control-lg"
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        name="email"
-                        onChange={handleChange}
-                    />
-                  </fieldset>
-                  <fieldset className="form-group">
-                    <input
-                        className="form-control form-control-lg"
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        name="password"
-                        onChange={handleChange}/>
-                  </fieldset>
-                  <button className="btn btn-lg btn-primary pull-xs-right">Sign up</button>
-                </form>
+                  <Form.Group controlId="registerEmail">
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control type="email" placeholder="Email" value={email} name="email" onChange={handleChange}/>
+                  </Form.Group>
+                  <Form.Group controlId="registerPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" value={password} name="password" onChange={handleChange}/>
+                    <Button variant="primary" type="submit">Sign up</Button>
+                  </Form.Group>
+                </Form>
               </div>
             </div>
           </div>
